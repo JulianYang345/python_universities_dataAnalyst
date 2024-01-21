@@ -1,19 +1,39 @@
 # python_universities_dataAnalyst
-a data analyst project where I make a script to clean up and visualize the data with outputs being both csv and pdf files
+A data analyst project where a script is used to clean up and visualize data, with outputs being both CSV and PDF files.
 
-functionality:
-main.py to read all of the base csv files from uni_databank, clean up all the data(drop unnecessary column, fill up empty column with logarithmic regressions, normalization, etc.)
+## Functionality:
 
-pdf_processing.py to read the pdf journals and filter out the main df rows base on the pdf data
+1. **main.py:**
+   - Reads all base CSV files from the 'uni_databank' folder.
+   - Cleans up the data (drops unnecessary columns, fills up empty columns with logarithmic regressions, normalization, etc.).
+   - Output will be all the modified csv and the unified version containing all the csv. it will be in the folder cleaned_csv_pandas
 
-transform_table.py to read the filtered file and pivot it one by one base on the value and save it to seperate files
+2. **pdf_processing.py:**
+   - Read the unified file from the previous step
+   - Reads PDF journals and filters out rows from the unified file based on the PDF data.
+   - Output will be the filtered csv in the folder cleaned_csv_pandas
 
-visualize.py to read the pivoted files and then visualize the data with line chart followed by trend lines
+4. **transform_table.py:**
+   - Reads the filtered file.
+   - Pivots the DataFrame one by one based on the columns with numeric values(ex: overall_score column) and saves them to separate files.
+   - Output will be at cleaned_csv_pandas/transformed containing all the pivoted csv
 
-to use it, you only need to run main.py as all the other module have already been imported and called in main.py
-make sure all the csv you need to clean up is inside the folder named uni_databank 
+5. **visualize.py:**
+   - Reads the pivoted files.
+   - Visualizes the data with line charts followed by trend lines.
+   - Output will be named plot.pdf at the same directory as the main.py
 
-- the output of main.py will be a unified cleaned data of all those csv from uni_databank
-- then pdf_processing will take the file as input and filter out the data base on the pdf. the output will be the filtered csv
-- transform_table then will take the filtered csv as input and pivot all the column with numeric values while adding average row down at the bottom. output will be all the pivoted csv
-- lastly visualize.py will take all the normalised csv then output a pdf containing all of the charts  
+To use it, run `main.py`. Ensure all the CSV files you need to clean up are inside the 'uni_databank' folder. no need to run the other files as those were already being called inside main.py.
+
+Library used:
+1. Pandas (the main library to read and manipulate csv)
+2. NumPy (to perform complex calculation)
+3. MatPlotLib (to visualize data)
+4. Chardet (to detect encoding)
+5. fitz (to read pdf)
+6. glob (to read path)
+7. sklearn (to do regression)
+
+## Usage:
+```bash
+python main.py
