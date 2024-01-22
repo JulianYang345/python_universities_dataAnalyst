@@ -5,9 +5,10 @@ import glob
 import os
 from matplotlib.backends.backend_pdf import PdfPages
 
-csv_files = glob.glob("Cleaned_csv_pandas/transformed/*_n_normalised.csv")
+csv_files = glob.glob("Cleaned_csv_pandas/transformed/*_unnormalised.csv")
 
-csv_files = [files for files in csv_files if "strategy_year_n_normalised.csv" not in files]
+csv_files = [files for files in csv_files if "strategy_year_unnormalised.csv" not in files]
+csv_files = [files for files in csv_files if "tahun_unnormalised.csv" not in files]
 
 pdf_filename = "plots.pdf"
 pdf_pages = PdfPages(pdf_filename)
@@ -16,7 +17,9 @@ for file in csv_files:
     df = pd.read_csv(file, encoding='utf-16')
     folder, subfolder = file.split('/')
     subfolder, file_name = subfolder.split('\\')
-    label_name = file_name.replace("_n_normalised.csv", "")
+    label_name = file_name.replace("_unnormalised.csv", "")
+    label_name = label_name.replace("_", " ")
+    label_name = "Average " + label_name
 
     before = df.columns.get_loc("-6.0")
     after = df.columns.get_loc("6.0") + 1
@@ -48,7 +51,7 @@ for file in csv_files:
     
     plt.xlabel("strategy year")
     plt.ylabel(label_name)
-    plt.title(file_name)
+    plt.title(label_name)
     plt.legend()
     plt.grid(True)
     plt.axvline(x=mid_point, color='black', linestyle='--')

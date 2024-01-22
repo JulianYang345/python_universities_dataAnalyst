@@ -21,8 +21,12 @@ def sort_uni(df, text_list, sorted_uni):
             uni_names.append(name.lower())
     
     for name in uni_names:
+        if 'wolverhampton' in name.lower():
+            continue
         for index, sentence in enumerate(text_list):
-            if name in sentence.lower() and name not in sorted_uni.keys():
+            if index+1 <= len(text_list)-1:
+                multi_line_name = sentence.lower() + text_list[index+1].lower()
+            if (name in sentence.lower() or name in multi_line_name) and (name not in sorted_uni.keys()):
                 i = 0
                 while index + i < len(text_list):
                     if '-' in text_list[index + i]:
@@ -80,11 +84,6 @@ def pdf_processing():
         text = page.get_text() # Extract text from the page
         text_list = text.split("\n")
             
-        '''
-        file = open('pdf_content.txt', 'a', encoding='utf-8')
-        file.write(f"Page {3}:")
-        file.write(text)'''
-
         sorted_uni = sort_uni(union_df, text_list, sorted_uni)
 
         opened_pdf.close()

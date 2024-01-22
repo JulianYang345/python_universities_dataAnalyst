@@ -57,7 +57,7 @@ def get_gradient(df):
 
 
 def transform_table():
-    df = pd.read_csv("Cleaned_csv_pandas/07-unified-strategy-year_normalised.csv", encoding='utf-16')
+    df = pd.read_csv("Cleaned_csv_pandas/07-unified-strategy-year-normalised.csv", encoding='utf-16')
     for column in df.columns:
         if '_n' in column:
             normal = 'normalised'
@@ -68,8 +68,10 @@ def transform_table():
             df_pivoted = df.pivot(index='name', columns='strategy_year_n', values=column)
             df_pivoted = df_pivoted.reset_index()
 
+            '''
             print("Columns of df_pivoted:")
             print(df_pivoted.columns)
+            '''
             
             '''
             df_pivoted.insert(df_pivoted.columns.get_loc((df_pivoted.columns[-1])) + 1, 'm-1', '')
