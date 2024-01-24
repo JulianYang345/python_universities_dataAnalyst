@@ -21,11 +21,13 @@ def sort_uni(df, text_list, sorted_uni):
             uni_names.append(name.lower())
     
     for name in uni_names:
+        multi_line_name = ''
         if 'wolverhampton' in name.lower():
             continue
         for index, sentence in enumerate(text_list):
             if index+1 <= len(text_list)-1:
-                multi_line_name = sentence.lower() + text_list[index+1].lower()
+                if(name not in text_list[index+1].lower()):
+                    multi_line_name = sentence.lower() + text_list[index+1].lower()
             if (name in sentence.lower() or name in multi_line_name) and (name not in sorted_uni.keys()):
                 i = 0
                 while index + i < len(text_list):
@@ -95,4 +97,3 @@ def pdf_processing():
     sorted_df = normalization_strategy_year(sorted_df)
 
     sorted_df.to_csv("Cleaned_csv_pandas/07-unified-strategy-year-normalised.csv", index=False, encoding='utf-16')
-
