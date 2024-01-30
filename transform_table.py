@@ -84,14 +84,18 @@ def transform_table():
                 df_pivoted.iloc[:, i] = df_pivoted.iloc[:, i].replace('', np.nan)
                 df_pivoted.iloc[:, i] = df_pivoted.iloc[:, i].astype(float)
                 mean_value.append(str(round(df_pivoted.iloc[:, i].mean(), 4)))#df_pivoted.iloc[:, i].mean())
+                print(mean_value)
             
+            mean_value = [str(x) for x in mean_value]
             df_pivoted.loc[len(df_pivoted)] = mean_value
 
             for i in range(-12, 12):
-                if (i < -6 or i > 6) and float(i) in df_pivoted.columns:
+                if (i < -5 or i > 5) and float(i) in df_pivoted.columns:
                     df_pivoted = df_pivoted.drop([float(i)], axis = 1)
             
             for index, value in df_pivoted.iterrows():
+                if df_pivoted.at[index, "name"] == 'Average':
+                    break
                 splitted_name = df_pivoted.at[index, "name"].split(" ")
                 code_name = ""
                 i = 0
@@ -109,4 +113,4 @@ def transform_table():
 
             df_pivoted.to_csv(f"Cleaned_csv_pandas/transformed/{column}_{normal}.csv", index=False, encoding='utf-16')
 
-transform_table()
+#transform_table()

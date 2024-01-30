@@ -13,6 +13,7 @@ csv_files = [files for files in csv_files if "tahun_unnormalised.csv" not in fil
 pdf_filename = "plots.pdf"
 pdf_pages = PdfPages(pdf_filename)
 
+
 for file in csv_files:
     df = pd.read_csv(file, encoding='utf-16')
     folder, subfolder = file.split('/')
@@ -21,11 +22,11 @@ for file in csv_files:
     label_name = label_name.replace("_", " ")
     label_name = "Average " + label_name
 
-    before = df.columns.get_loc("-6.0")
-    after = df.columns.get_loc("6.0") + 1
+    before = df.columns.get_loc("-5.0")
+    after = df.columns.get_loc("5.0") + 1
     zero = df.columns.get_loc("0.0")
     x = np.array(df.columns[before:after].astype(float)) #year
-    y = np.array(df.iloc[-1, before:after].astype(float))
+    #y = np.array(df.iloc[-1, before:after].astype(float))
 
     before_trend_x = np.array(df.columns[before:(zero+1)].astype(float))
     before_trend_y = np.array(df.iloc[-1, before:(zero+1)].astype(float))
@@ -41,13 +42,26 @@ for file in csv_files:
     trend_line = slope * np.array(after_trend_x) + intercept
     plt.plot(after_trend_x, trend_line, color='green', linestyle='--', label="After IT strategy")
 
-
     mid_point = (max(x) + min(x)) / 2
-    plt.plot(x, y, color='blue', label=label_name)
+    
+    
+    boxplot_data = []
+    for i in range(before, after):
+        y = df.iloc[0:-1, i].astype(float)
+        y = y.fillna(y.mean())
+        y = y.tolist()
+        boxplot_data.append(y)
+    
+    # Plot boxplots without specifying positions
+    plt.boxplot(boxplot_data, positions=x, patch_artist=True, boxprops=dict(facecolor='blue', edgecolor='black'))
+
+    
+    #boxplot_data = np.array(boxplot_data).astype(float)
+    #plt.boxplot(boxplot_data, positions=x, patch_artist=True, boxprops=dict(facecolor='blue', edgecolor='black'))
+    
+    #plt.plot(x, y, color='blue', label=label_name)
     #plt.plot(x, df.iloc[-1]['m-1'], color='green', label="m-1")
     #plt.plot(x, df.iloc[-1]['m+1'], color='red', label="m+1" )
-    
-    # second plot with x1 and y1 data
     
     plt.xlabel("strategy year")
     plt.ylabel(label_name)
@@ -55,6 +69,7 @@ for file in csv_files:
     plt.legend()
     plt.grid(True)
     plt.axvline(x=mid_point, color='black', linestyle='--')
+    
 
     pdf_pages.savefig()
 
