@@ -26,7 +26,7 @@ for file in csv_files:
     after = df.columns.get_loc("5.0") + 1
     zero = df.columns.get_loc("0.0")
     x = np.array(df.columns[before:after].astype(float)) #year
-    #y = np.array(df.iloc[-1, before:after].astype(float))
+    y = np.array(df.iloc[-1, before:after].astype(float))
 
     before_trend_x = np.array(df.columns[before:(zero+1)].astype(float))
     before_trend_y = np.array(df.iloc[-1, before:(zero+1)].astype(float))
@@ -44,7 +44,7 @@ for file in csv_files:
 
     mid_point = (max(x) + min(x)) / 2
     
-    
+    ''' For boxplot
     boxplot_data = []
     for i in range(before, after):
         y = df.iloc[0:-1, i].astype(float)
@@ -55,11 +55,9 @@ for file in csv_files:
     # Plot boxplots without specifying positions
     plt.boxplot(boxplot_data, positions=x, patch_artist=True, boxprops=dict(facecolor='blue', edgecolor='black'))
 
+    '''
     
-    #boxplot_data = np.array(boxplot_data).astype(float)
-    #plt.boxplot(boxplot_data, positions=x, patch_artist=True, boxprops=dict(facecolor='blue', edgecolor='black'))
-    
-    #plt.plot(x, y, color='blue', label=label_name)
+    plt.plot(x, y, color='blue', label=label_name)
     #plt.plot(x, df.iloc[-1]['m-1'], color='green', label="m-1")
     #plt.plot(x, df.iloc[-1]['m+1'], color='red', label="m+1" )
     

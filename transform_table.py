@@ -84,7 +84,6 @@ def transform_table():
                 df_pivoted.iloc[:, i] = df_pivoted.iloc[:, i].replace('', np.nan)
                 df_pivoted.iloc[:, i] = df_pivoted.iloc[:, i].astype(float)
                 mean_value.append(str(round(df_pivoted.iloc[:, i].mean(), 4)))#df_pivoted.iloc[:, i].mean())
-                print(mean_value)
             
             mean_value = [str(x) for x in mean_value]
             df_pivoted.loc[len(df_pivoted)] = mean_value
