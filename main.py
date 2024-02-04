@@ -9,6 +9,7 @@ import fitz
 import pdf_processing
 import transform_table
 import visualize
+import whitney_u
 
 def is_float(val):
     try:
@@ -208,6 +209,7 @@ def main():
 
         result_df = pd.concat([result_df, df])
 
+
     result_df = normalization(result_df)
     result_df = result_df.drop_duplicates().reset_index(drop=True)
     result_df.to_csv("Cleaned_csv_pandas/03-unified-normalised.csv", index=False, encoding='utf-16')
@@ -215,6 +217,7 @@ def main():
     pdf_processing.pdf_processing()
     transform_table.transform_table()
     visualize
+    whitney_u
     
 if __name__=="__main__":
     new_directory = "Cleaned_csv_pandas"  # Replace with the desired path

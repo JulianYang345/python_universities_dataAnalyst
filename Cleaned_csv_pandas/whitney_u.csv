@@ -1,0 +1,13 @@
+Variable,Variance of m-1,Average of m-1,Variance of m+1,Average of m+1,P Value
+citations score,7.3688,2.5875,6.4905,1.029,0.0871
+industry income score,2.5632,0.0333,2.2776,0.6079,0.3265
+international outlook score,3.1762,2.1291,1.958,0.5714,0.0015
+intl students,0.0001,0.0043,0.0001,0.0045,0.4566
+number students,137508.1327,-10.0474,180963.1158,371.8776,0.0056
+overall score,3.1852,0.5205,2.0994,0.9566,0.8503
+rank,681.0696,11.3763,2115.5692,15.9649,0.8999
+research score,3.4239,1.0678,2.4447,0.4691,0.2523
+strategy year,0.0,0.0,0.0,0.0,1.0
+student staff ratio,0.0,-0.0009,0.0001,0.0002,0.3644
+tahun,0.0,1.0,0.0,1.0,1.0
+teaching score,2.8196,0.2946,0.8945,-0.0478,0.0403

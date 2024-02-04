@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import chardet
 import fitz
+import scipy.stats as stats
 
 def is_float(val):
     try:
@@ -58,6 +59,7 @@ def get_gradient(df):
 
 def transform_table():
     df = pd.read_csv("Cleaned_csv_pandas/07-unified-strategy-year-normalised.csv", encoding='utf-16')
+    df_whitney = pd.DataFrame()
     for column in df.columns:
         if '_n' in column:
             normal = 'normalised'
@@ -68,16 +70,13 @@ def transform_table():
             df_pivoted = df.pivot(index='name', columns='strategy_year_n', values=column)
             df_pivoted = df_pivoted.reset_index()
 
-            '''
-            print("Columns of df_pivoted:")
-            print(df_pivoted.columns)
-            '''
+            for i in range(-12, 12):
+                if (i < -5 or i > 5) and float(i) in df_pivoted.columns:
+                    df_pivoted = df_pivoted.drop([float(i)], axis = 1)
             
-            '''
             df_pivoted.insert(df_pivoted.columns.get_loc((df_pivoted.columns[-1])) + 1, 'm-1', '')
             df_pivoted.insert(df_pivoted.columns.get_loc((df_pivoted.columns[-1])) + 1, 'm+1', '')
             df_pivoted = get_gradient(df_pivoted)
-            '''
 
             mean_value = ['Average']
             for i in range(1, df_pivoted.shape[1]):
@@ -87,10 +86,6 @@ def transform_table():
             
             mean_value = [str(x) for x in mean_value]
             df_pivoted.loc[len(df_pivoted)] = mean_value
-
-            for i in range(-12, 12):
-                if (i < -5 or i > 5) and float(i) in df_pivoted.columns:
-                    df_pivoted = df_pivoted.drop([float(i)], axis = 1)
             
             for index, value in df_pivoted.iterrows():
                 if df_pivoted.at[index, "name"] == 'Average':
@@ -109,7 +104,7 @@ def transform_table():
                         code_name += word[0:2]
                     i += 1
                 df_pivoted.at[index, "name"] = code_name
-
+            df_pivoted = df_pivoted.astype(str)
             df_pivoted.to_csv(f"Cleaned_csv_pandas/transformed/{column}_{normal}.csv", index=False, encoding='utf-16')
 
 #transform_table()
